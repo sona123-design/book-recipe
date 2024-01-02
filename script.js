@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let recipes = [];
+    let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
     const recipeList = document.getElementById('recipe-list');
     const recipeForm = document.getElementById('recipe-form');
@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const ingredientsInput = document.getElementById('ingredients');
     const instructionsInput = document.getElementById('instructions');
     let editingRecipeId = null;
+
+    function saveRecipes() {
+        localStorage.setItem('recipes', JSON.stringify(recipes));
+    }
 
     function displayRecipes() {
         recipeList.innerHTML = '';
@@ -41,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 recipes.push(newRecipe);
             }
 
+            saveRecipes();
             displayRecipes();
 
             // Clear the form inputs after adding/editing
@@ -77,12 +82,15 @@ document.addEventListener('DOMContentLoaded', function () {
             instructionsInput.value = '';
         }
 
+        saveRecipes();
         displayRecipes();
     }
 
     // Initial display
     displayRecipes();
 });
+
+
 
 
 
